@@ -1,130 +1,146 @@
-# Getting started with PHP on IBM Cloud
+<h1 align="center" style="border-bottom: none;">🚀 Visual Recognition Sample Application</h1>
+<h3 align="center">This Node.js app demonstrates some of the Visual Recognition service features.</h3>
+<p align="center">
+  <a href="http://travis-ci.org/watson-developer-cloud/visual-recognition-nodejs">
+    <img alt="Travis" src="https://travis-ci.org/watson-developer-cloud/visual-recognition-nodejs.svg?branch=master">
+  </a>
+  <a href="#badge">
+    <img alt="semantic-release" src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg">
+  </a>
+</p>
+</p>
 
-This guide will take you through the steps to get started with a simple PHP application in IBM Cloud and help you:
-- Set up a development environment
-- Download sample code
-- Run the application locally
-- Run the application on IBM Cloud Cloud Foundry
-- Add a IBM Cloud Database service
-- Connect to the database from your local application
+The [Visual Recognition][visual_recognition_service] Service uses deep learning algorithms to analyze images for scenes, objects, faces, text, and other subjects that can give you insights into your visual content. You can organize image libraries, understand an individual image, and create custom classifiers for specific results that are tailored to your needs.
 
 ## Prerequisites
 
-You'll need the following:
-* [IBM Cloud account](https://console.ng.bluemix.net/registration/)
-* [Cloud Foundry CLI](https://github.com/cloudfoundry/cli#downloads)
-* [Git](https://git-scm.com/downloads)
-* [PHP](http://php.net/downloads.php)
-* [Composer](https://getcomposer.org/download/)
+1. Sign up for an [IBM Cloud account](https://console.bluemix.net/registration/).
+1. Download the [IBM Cloud CLI](https://console.bluemix.net/docs/cli/index.html#overview).
+1. Create an instance of the Visual Recognition service and get your credentials:
+    - Go to the [Visual Recognition](https://console.bluemix.net/catalog/services/visual-recognition) page in the IBM Cloud Catalog.
+    - Log in to your IBM Cloud account.
+    - Click **Create**.
+    - Click **Show** to view the service credentials.
+    - Copy the `apikey` value.
+    - Copy the `url` value.
 
-## 1. Clone the sample app
+## Configuring the application
 
-Now you're ready to start working with the app. Clone the repo and change the directory to where the sample app is located.
-  ```
-git clone https://github.com/IBM-Cloud/get-started-php
-cd get-started-php
-  ```
+1. In the application folder, copy the *.env.example* file and create a file called *.env*
 
-## 2. Run the app locally
+    ```
+    cp .env.example .env
+    ```
 
-Install dependencies
-```
-php composer.phar install
-```
+2. Open the *.env* file and add the service credentials that you obtained in the previous step.
 
-Run the app
-  ```
-php -S localhost:8000
-  ```
+    Example *.env* file that configures the `apikey` and `url` for a Visual Recognition service instance hosted in the US East region:
 
-View your app at: http://localhost:8000
+    ```
+    VISUAL_RECOGNITION_IAM_APIKEY=X4rbi8vwZmKpXfowaS3GAsA7vdy17Qh7km5D6EzKLHL2
+    VISUAL_RECOGNITION_URL=https://gateway.watsonplatform.net/visual-recognition/api
+    ```
 
-## 3. Prepare the app for deployment
+## Running locally
 
-To deploy to IBM Cloud, it can be helpful to set up a manifest.yml file. One is provided for you with the sample. Take a moment to look at it.
+1. Install the dependencies
 
-The manifest.yml includes basic information about your app, such as the name, how much memory to allocate for each instance and the route. In this manifest.yml **random-route: true** generates a random route for your app to prevent your route from colliding with others.  You can replace **random-route: true** with **host: myChosenHostName**, supplying a host name of your choice. [Learn more...](https://console.bluemix.net/docs/manageapps/depapps.html#appmanifest)
- ```
- applications:
- - name: GetStartedPHP
-   random-route: true
-   memory: 128M
- ```
+    ```
+    npm install
+    ```
 
-## 4. Deploy the app
+1. Run the application
 
-You can use the Cloud Foundry CLI to deploy apps.
+    ```
+    npm start
+    ```
 
-Choose your API endpoint
-   ```
-cf api <API-endpoint>
-   ```
-   {: pre}
+1. View the application in a browser at `localhost:3000`
 
-Replace the *API-endpoint* in the command with an API endpoint from the following list.
+## Deploying to IBM Cloud as a Cloud Foundry Application
 
-|URL                             |Region          |
-|:-------------------------------|:---------------|
-| https://api.ng.bluemix.net     | US South       |
-| https://api.eu-gb.bluemix.net  | United Kingdom |
-| https://api.eu-de.bluemix.net  | Germany        |
-| https://api.au-syd.bluemix.net | Sydney         |
+1. Login to IBM Cloud with the [IBM Cloud CLI](https://console.bluemix.net/docs/cli/index.html#overview)
 
-Login to your IBM Cloud account
+    ```
+    ibmcloud login
+    ```
 
-   ```
-cf login
-   ```
+1. Target a Cloud Foundry organization and space.
 
-From within the *get-started-php* directory push your app to IBM Cloud
-   ```
-cf push
-   ```
+    ```
+    ibmcloud target --cf
+    ```
 
-This can take a minute. If there is an error in the deployment process you can use the command `cf logs <Your-App-Name> --recent` to troubleshoot.
+1. Edit the *manifest.yml* file. Change the **name** field to something unique.  
+  For example, `- name: my-app-name`.
+1. Deploy the application
 
-When deployment completes you should a message indicating that your app is running.  View your app at the URL listed in the output of the push command.  You can also issue the
-  ```
-cf apps
-  ```
-command to view your apps status and see the URL.
+    ```
+    ibmcloud app push
+    ```
 
-## 5. Add a database
+1. View the application online at the app URL.  
+For example: https://my-app-name.mybluemix.net
 
-Next, we'll add a NoSQL database to this application and set up the application so that it can run locally and on IBM Cloud.
 
-1. Log in to IBM Cloud in your Browser. Browse to the `Dashboard`. Select your application by clicking on its name in the `Name` column.
-2. Click on `Connections` then `Connect new`.
-3. In the `Data & Analytics` section, select `Cloudant NoSQL DB` and `Create` the service.
-4. Select `Restage` when prompted. IBM Cloud will restart your application and provide the database credentials to your application using the `VCAP_SERVICES` environment variable. This environment variable is only available to the application when it is running on IBM Cloud.
+## Environment Variables
 
-Environment variables enable you to separate deployment settings from your source code. For example, instead of hardcoding a database password, you can store this in an environment variable which you reference in your source code. [Learn more...](/docs/manageapps/depapps.html#app_env)
+  - `VISUAL_RECOGNITION_IAM_API_KEY` : This is the IAM API key for the vision service, used if you don't have one in your IBM Cloud account.
+  - `PRESERVE_CLASSIFIERS` : Set if you don't want classifiers to be deleted after one hour. *(optional)*
+  - `PORT` : The port the server should run on. *(optional, defaults to 3000)*
+  - `OVERRIDE_CLASSIFIER_ID` : Set to a classifer ID if you want to always use a custom classifier. This classifier will be used instead of training a new one. *(optional)*
 
-## 6. Use the database
+## Changing the Included Images
 
-We're now going to update your local code to point to this database. We'll create a file that will store the credentials for the services the application will use. This file will get used ONLY when the application is running locally. When running in IBM Cloud, the credentials will be read from the VCAP_SERVICES environment variable.
+### Sample Images
 
-1. Create a file called `.env` in the `get-started-php` directory with the following content:
-  ```
-  CLOUDANT_HOST=
-  CLOUDANT_USERNAME=
-  CLOUDANT_PASSWORD=
-  ```
+The sample images are the first 7 images when the site loads.  They
+are called from a Jade mixin found in
+`views/mixins/sampleImages.jade`.  If you just want to replace those
+images with different images, you can replace them in
+`public/images/samples` and they are numbered 1 - 7 and are `jpg`
+formatted.
 
-2. Back in the IBM Cloud UI, select your App -> Connections -> Cloudant -> View Credentials
+### Custom Classifier Bundles
 
-3. Copy and paste just the `url` from the credentials to the `CLOUDANT_URL` field of the `.env` file and save the changes.  The result will be something like:
-  ```
-  CLOUDANT_HOST=abc...yz.cloudant.com
-  CLOUDANT_USERNAME=abc...yz
-  CLOUDANT_PASSWORD=445d...d1a
-  ```
+Adding new/different custom classifer bundles is much more invovled.
+You can follow the template of the existing bundles found in
+`views/includes/train.jade`.
 
-4. Run your application locally.
-  ```
-php -S localhost:8000
-  ```
+Or, you can train a custom classifier using the api or the form and
+then use the classifier ID.
 
-View your app at: http://localhost:8080. Any names you enter into the app will now get added to the database.
+## Getting the Classifier ID
 
-Your local app and  the IBM Cloud app are sharing the database.  View your IBM Cloud app at the URL listed in the output of the push command from above.  Names you add from either app should appear in both when you refresh the browsers.
+When you train a custom classifier, the name of the classifier is
+displayed in the test form.
+
+![Classifier ID Tooltip](screengrab-tooltip.png)
+
+If you hover your mouse over the classifier name, the classifier ID
+will be shown in the tooltip. You can also click on the name, and it
+will toggle between the classifier name and the classifier ID.
+
+You can then use this custom classifier id by placing it after the hash
+in the request URL.  For example, lets say you are running the system
+locally, so the base URL is `http://localhost:3000` and then you train
+a classifier.  This newly trained classifier might have an id like
+`SatelliteImagery_859438478`.   If you wanted to use this classifier
+instead of training a new one, you can navigate to
+`http://localhost:3000/train#SatelliteImagery_859438478` and use the
+training form with your existing classifier.
+
+## License
+
+  This sample code is licensed under Apache 2.0. Full license text is available in [LICENSE](LICENSE).
+
+## Contributing
+
+  See [CONTRIBUTING](CONTRIBUTING.md).
+
+## Open Source @ IBM
+  Find more open source projects on the [IBM Github Page](http://ibm.github.io/).
+
+
+[service_url]: https://www.ibm.com/watson/services/visual-recognition/
+[visual_recognition_service]: https://www.ibm.com/watson/services/visual-recognition/

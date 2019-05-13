@@ -1,5 +1,6 @@
 ---
 applications:
- - name: GetStartedPHP
-   random-route: true
-   memory: 128M
+- name: visual-recognition-demo
+  path: .
+  command: npm start
+  memory: 768M
