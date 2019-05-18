@@ -2744,7 +2744,7 @@ img.checkered-bg {
 ._demo--banner {
   margin-top: 0;
   background-color: #f4f4f4;
-  border-bottom: 2px solid #ececec;
+  /*border-bottom: 2px solid #ececec;*/
 }
 
 ._content {
