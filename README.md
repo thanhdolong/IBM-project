@@ -1,5 +1,4 @@
-<h1 align="center" style="border-bottom: none;">🚀 Visual Recognition Sample Application</h1>
-<h3 align="center">This Node.js app demonstrates some of the Visual Recognition service features.</h3>
+<h1 align="center" style="border-bottom: none;">🚀 Visual Recognition Application</h1>
 <p align="center">
   
 <a href="https://www.muni.cz/en">
