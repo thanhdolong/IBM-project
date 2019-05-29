@@ -1,9 +1,14 @@
 <h1 align="center" style="border-bottom: none;">🚀 Visual Recognition Sample Application</h1>
 <h3 align="center">This Node.js app demonstrates some of the Visual Recognition service features.</h3>
 <p align="center">
-  <a href="http://travis-ci.org/watson-developer-cloud/visual-recognition-nodejs">
-    <img alt="Travis" src="https://travis-ci.org/watson-developer-cloud/visual-recognition-nodejs.svg?branch=master">
-  </a>
+  
+	<a href="https://www.muni.cz/en">
+		<img src="https://img.shields.io/badge/University-Masaryk%20University%20-red.svg" alt="university">
+	</a>
+	<a href="https://www.fi.muni.cz/index.html.en">
+		<img src="https://img.shields.io/badge/Faculty-Faculty%20of%20Information%20Technology-blue.svg" alt="faculty">
+	</a>
+
   <a href="#badge">
     <img alt="semantic-release" src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg">
   </a>
