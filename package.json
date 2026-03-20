@@ -81,7 +81,7 @@
     "casperjs": "^1.1.4",
     "codecov": "^3.2.0",
     "combinations": "^0.1.1",
-    "eslint": "^5.14.0",
+    "eslint": "^10.1.0",
     "istanbul": "^0.4.5",
     "jest": "^24.1.0",
     "mocha": "^5.2.0",
